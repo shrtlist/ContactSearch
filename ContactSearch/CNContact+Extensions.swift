@@ -9,16 +9,11 @@ import Foundation
 import Contacts
 
 extension CNContact {
-    /// - returns: The formatted name of a contact if there is one and "No Name", otherwise.
-    var formattedName: String {
+    /// - returns: Combined contact name components and "No Name", otherwise.
+    var fullName: String {
         if let name = CNContactFormatter.string(from: self, style: .fullName) {
             return name.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         return "No Name"
-    }
-
-    /// Determines whether a contact is a person or organization.
-    var isPerson: Bool {
-        return (self.contactType == .person)
     }
 }
