@@ -16,7 +16,7 @@ struct ContentView: View {
         NavigationView {
             List(searchResults) { contactAddress in
                 VStack(alignment: .leading) {
-                    Text(contactAddress.formattedName)
+                    Text(contactAddress.fullName)
 
                     if let postalAddressLabeledValue = contactAddress.postalAddressLabeledValue {
                         let addressString = postalAddressLabeledValue.value.addressString
@@ -40,7 +40,7 @@ struct ContentView: View {
         if searchText.isEmpty {
             return contacts
         } else {
-            return contacts.filter { $0.formattedName.contains(searchText) }
+            return contacts.filter { $0.fullName.contains(searchText) }
         }
     }
 }

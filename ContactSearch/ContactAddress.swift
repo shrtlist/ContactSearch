@@ -27,8 +27,8 @@ struct ContactAddress: Identifiable {
         return postalAddressLabeledValue?.value.debugDescription
     }
 
-    var formattedName: String {
-        return contact.formattedName
+    var fullName: String {
+        return contact.fullName
     }
 
     var label: String? {
@@ -36,7 +36,7 @@ struct ContactAddress: Identifiable {
     }
 
     var formattedNameAndAddressLabel: String {
-        var name = formattedName
+        var name = fullName
 
         if let label = label {
             let localizedLabel = CNLabeledValue<CNPostalAddress>.localizedString(forLabel: label)
