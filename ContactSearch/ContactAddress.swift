@@ -23,26 +23,7 @@ struct ContactAddress: Identifiable {
         }
     }
 
-    var addressString: String? {
-        return postalAddressLabeledValue?.value.debugDescription
-    }
-
     var fullName: String {
         return contact.fullName
-    }
-
-    var label: String? {
-        return postalAddressLabeledValue?.label
-    }
-
-    var formattedNameAndAddressLabel: String {
-        var name = fullName
-
-        if let label = label {
-            let localizedLabel = CNLabeledValue<CNPostalAddress>.localizedString(forLabel: label)
-            name.append(" (\(localizedLabel))")
-        }
-
-        return name
     }
 }
