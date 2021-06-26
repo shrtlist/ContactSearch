@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Contacts
 import ContactsUI
 
 class ContactStore: ObservableObject {
@@ -23,8 +22,9 @@ class ContactStore: ObservableObject {
             }
 
             if granted {
-                let keys = [CNContactGivenNameKey as CNKeyDescriptor, CNContactFamilyNameKey as CNKeyDescriptor, CNContactOrganizationNameKey as CNKeyDescriptor, CNContactPostalAddressesKey as CNKeyDescriptor, CNContactViewController.descriptorForRequiredKeys(), CNContactFormatter.descriptorForRequiredKeys(for: .fullName)]
-                let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
+                let keys = [CNContactViewController.descriptorForRequiredKeys()] as [CNKeyDescriptor]
+
+                let request = CNContactFetchRequest(keysToFetch: keys)
                 request.sortOrder = .familyName
 
                 do {
