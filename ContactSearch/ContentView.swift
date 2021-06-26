@@ -35,12 +35,12 @@ struct ContentView: View {
     }
 
     var searchResults: [ContactAddress] {
-        let contacts = contactStore.contacts
+        let contactAddresses = contactStore.contactAddresses
 
         if searchText.isEmpty {
-            return contacts
+            return contactAddresses
         } else {
-            return contacts.filter { $0.fullName.contains(searchText) }
+            return contactAddresses.filter { $0.fullName.contains(searchText) }
         }
     }
 }

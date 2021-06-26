@@ -11,7 +11,7 @@ import ContactsUI
 
 class ContactStore: ObservableObject {
 
-    @Published var contacts: [ContactAddress] = []
+    @Published var contactAddresses: [ContactAddress] = []
     @Published var error: Error? = nil
 
     func fetchContacts() {
@@ -28,23 +28,23 @@ class ContactStore: ObservableObject {
                 request.sortOrder = .familyName
 
                 do {
-                    var contactsArray = [ContactAddress]()
+                    var contactAddresses = [ContactAddress]()
                     try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
                         let postalAddresses = contact.postalAddresses
 
                         if !postalAddresses.isEmpty {
                             for (_, postalAddress) in postalAddresses.enumerated() {
                                 let contactAddress = ContactAddress(contact: contact, postalAddressLabeledValue: postalAddress)
-                                contactsArray.append(contactAddress)
+                                contactAddresses.append(contactAddress)
                             }
                         } else {
                             let contactAddress = ContactAddress(contact: contact)
-                            contactsArray.append(contactAddress)
+                            contactAddresses.append(contactAddress)
                         }
                     })
 
                     DispatchQueue.main.async {
-                        self.contacts = contactsArray
+                        self.contactAddresses = contactAddresses
                     }
                 } catch let error {
                     print("Failed to enumerate contact", error)
