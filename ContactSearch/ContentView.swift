@@ -9,7 +9,7 @@ import SwiftUI
 import Contacts
 
 struct ContentView: View {
-    @ObservedObject var contactStore = ContactStore()
+    @EnvironmentObject var contactStore: ContactStore
     @State private var searchText = ""
 
     var body: some View {
