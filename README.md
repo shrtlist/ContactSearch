@@ -1,7 +1,7 @@
 # ContactSearch
-SwiftUI view to search contacts
+Use SwiftUI's `.searchable` modifier to filter contacts.
 
-https://user-images.githubusercontent.com/723122/122478181-c8b37d80-cf7d-11eb-9cf1-e791772a6b5c.mp4
+![Simulator Screen Recording - iPhone 12 mini - 2021-06-28 at 11 30 12](https://user-images.githubusercontent.com/723122/123686805-0bd6e180-d805-11eb-96f5-366f52669802.gif)
 
 ## License
 
