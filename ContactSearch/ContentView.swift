@@ -40,7 +40,7 @@ struct ContentView: View {
         if searchText.isEmpty {
             return contactAddresses
         } else {
-            return contactAddresses.filter { $0.fullName.contains(searchText) }
+            return contactAddresses.filter { $0.fullName.localizedCaseInsensitiveContains(searchText) }
         }
     }
 }
