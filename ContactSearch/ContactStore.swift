@@ -8,50 +8,57 @@
 import SwiftUI
 import ContactsUI
 
+@MainActor
 class ContactStore: ObservableObject {
 
     @Published var contactAddresses: [ContactAddress] = []
     @Published var error: Error? = nil
 
-    func fetchContacts() {
-        let store = CNContactStore()
-        store.requestAccess(for: .contacts) { (granted, error) in
-            if let error = error {
-                print("failed to request access", error)
-                return
-            }
+    func fetchContactAddresses() async {
+        let task = Task.detached {
+            let keys = await [CNContactViewController.descriptorForRequiredKeys()] as [CNKeyDescriptor]
+            let request = CNContactFetchRequest(keysToFetch: keys)
+            request.sortOrder = .familyName
+            let store = CNContactStore()
 
-            if granted {
-                let keys = [CNContactViewController.descriptorForRequiredKeys()] as [CNKeyDescriptor]
+            do {
+                try await store.requestAccess(for: .contacts)
 
-                let request = CNContactFetchRequest(keysToFetch: keys)
-                request.sortOrder = .familyName
+                var contactAddresses = [ContactAddress]()
 
-                do {
-                    var contactAddresses = [ContactAddress]()
-                    try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
-                        let postalAddresses = contact.postalAddresses
+                try store.enumerateContacts(with: request, usingBlock: { contact, stop in
+                    guard !Task.isCancelled else {
+                        stop.pointee = true
+                        return
+                    }
 
-                        if !postalAddresses.isEmpty {
-                            for (_, postalAddress) in postalAddresses.enumerated() {
-                                let contactAddress = ContactAddress(contact: contact, postalAddressLabeledValue: postalAddress)
-                                contactAddresses.append(contactAddress)
-                            }
-                        } else {
-                            let contactAddress = ContactAddress(contact: contact)
+                    let postalAddresses = contact.postalAddresses
+
+                    if !postalAddresses.isEmpty {
+                        for (_, postalAddress) in postalAddresses.enumerated() {
+                            let contactAddress = ContactAddress(contact: contact, postalAddressLabeledValue: postalAddress)
                             contactAddresses.append(contactAddress)
                         }
-                    })
-
-                    DispatchQueue.main.async {
-                        self.contactAddresses = contactAddresses
+                    } else {
+                        let contactAddress = ContactAddress(contact: contact)
+                        contactAddresses.append(contactAddress)
                     }
-                } catch let error {
-                    print("Failed to enumerate contact", error)
+                })
+
+                try Task.checkCancellation()
+
+                DispatchQueue.main.async {
+                    self.contactAddresses = contactAddresses
                 }
-            } else {
-                print("access denied")
+            } catch {
+                print(error.localizedDescription)
             }
+        }
+
+        return await withTaskCancellationHandler {
+            await task.value
+        } onCancel: {
+            task.cancel()
         }
     }
 }

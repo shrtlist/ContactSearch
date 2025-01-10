@@ -29,9 +29,11 @@ struct ContentView: View {
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationTitle("Contacts")
         }
-        .onAppear(perform: {
-            contactStore.fetchContacts()
-        })
+        .onAppear {
+            Task {
+                await contactStore.fetchContactAddresses()
+            }
+        }
     }
 
     var searchResults: [ContactAddress] {
