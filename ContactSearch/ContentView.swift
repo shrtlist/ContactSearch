@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var searchText = ""
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(searchResults) { contactAddress in
                 VStack(alignment: .leading) {
                     Text(contactAddress.fullName)
