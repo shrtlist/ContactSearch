@@ -15,16 +15,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List(searchResults) { contactAddress in
-                VStack(alignment: .leading) {
-                    Text(contactAddress.fullName)
-
-                    if let postalAddressLabeledValue = contactAddress.postalAddressLabeledValue {
-                        let addressString = postalAddressLabeledValue.value.addressString
-                        Text(addressString)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                }
+                ContactAddressRow(contactAddress: contactAddress)
             }
             .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationTitle("Contacts")
