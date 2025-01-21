@@ -13,9 +13,12 @@ class ContactStore: ObservableObject {
 
     @Published var searchText = ""
     @Published var contactAddresses: [ContactAddress] = []
-    @Published var error: Error? = nil
+    @Published var isLoading = false
 
     func fetchContactAddresses() async {
+        guard !isLoading else { return }
+        isLoading = true
+
         let task = Task.detached {
             let keys = await [CNContactViewController.descriptorForRequiredKeys()] as [CNKeyDescriptor]
             let request = CNContactFetchRequest(keysToFetch: keys)
@@ -50,6 +53,7 @@ class ContactStore: ObservableObject {
 
                 DispatchQueue.main.async {
                     self.contactAddresses = contactAddresses
+                    self.isLoading = false
                 }
             } catch {
                 print(error.localizedDescription)

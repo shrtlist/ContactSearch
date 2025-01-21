@@ -13,8 +13,18 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            List(contactStore.searchResults) { contactAddress in
-                ContactAddressRow(contactAddress: contactAddress)
+            Group {
+                if contactStore.isLoading {
+                    ProgressView()
+                } else if contactStore.searchResults.isEmpty {
+                    ScrollView {
+                        ContentUnavailableView.init("No results", systemImage: "person.crop.circle")
+                    }
+                } else {
+                    List(contactStore.searchResults) { contactAddress in
+                        ContactAddressRow(contactAddress: contactAddress)
+                    }
+                }
             }
             .searchable(text: $contactStore.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationTitle("Contacts")
