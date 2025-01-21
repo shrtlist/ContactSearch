@@ -43,6 +43,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C6934E22D3F59FC001D42D9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				219F4944267171110036675A /* ContactSearchApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1C6934E32D3F5A06001D42D9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1C1BB5812D3229A400562892 /* ContactAddressRow.swift */,
+				219F4946267171110036675A /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1C6934E42D3F5A18001D42D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				216744D2267AC489000BC2BA /* ContactAddress.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1C6934E52D3F5A34001D42D9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				216744D4267ACD38000BC2BA /* CNContact+Extensions.swift */,
+				216744D6267BA32F000BC2BA /* CNPostalAddress+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1C6934E62D3F5A6C001D42D9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				216744CD267A9149000BC2BA /* ContactStore.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		219F4938267171110036675A = {
 			isa = PBXGroup;
 			children = (
@@ -62,13 +104,11 @@
 		219F4943267171110036675A /* ContactSearch */ = {
 			isa = PBXGroup;
 			children = (
-				1C1BB5812D3229A400562892 /* ContactAddressRow.swift */,
-				216744D4267ACD38000BC2BA /* CNContact+Extensions.swift */,
-				216744D6267BA32F000BC2BA /* CNPostalAddress+Extensions.swift */,
-				216744D2267AC489000BC2BA /* ContactAddress.swift */,
-				219F4944267171110036675A /* ContactSearchApp.swift */,
-				216744CD267A9149000BC2BA /* ContactStore.swift */,
-				219F4946267171110036675A /* ContentView.swift */,
+				1C6934E22D3F59FC001D42D9 /* App */,
+				1C6934E52D3F5A34001D42D9 /* Extensions */,
+				1C6934E42D3F5A18001D42D9 /* Models */,
+				1C6934E62D3F5A6C001D42D9 /* ViewModels */,
+				1C6934E32D3F5A06001D42D9 /* Views */,
 				219F4948267171140036675A /* Assets.xcassets */,
 				216744D1267AAA60000BC2BA /* Info.plist */,
 				219F494A267171140036675A /* Preview Content */,
