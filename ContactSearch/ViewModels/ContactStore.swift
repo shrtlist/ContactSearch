@@ -11,6 +11,7 @@ import ContactsUI
 @MainActor
 class ContactStore: ObservableObject {
 
+    @Published var searchText = ""
     @Published var contactAddresses: [ContactAddress] = []
     @Published var error: Error? = nil
 
@@ -59,6 +60,14 @@ class ContactStore: ObservableObject {
             await task.value
         } onCancel: {
             task.cancel()
+        }
+    }
+
+    var searchResults: [ContactAddress] {
+        if searchText.isEmpty {
+            return contactAddresses
+        } else {
+            return contactAddresses.filter { $0.fullName.localizedCaseInsensitiveContains(searchText) }
         }
     }
 }
