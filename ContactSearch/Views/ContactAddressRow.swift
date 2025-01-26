@@ -11,15 +11,30 @@ struct ContactAddressRow: View {
     let contactAddress: ContactAddress
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(contactAddress.fullName)
+        HStack {
+            profileImage
 
-            if let postalAddressLabeledValue = contactAddress.postalAddressLabeledValue {
-                let addressString = postalAddressLabeledValue.value.addressString
-                Text(addressString)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+            VStack(alignment: .leading) {
+                Text(contactAddress.fullName)
+
+                if let postalAddressLabeledValue = contactAddress.postalAddressLabeledValue {
+                    let addressString = postalAddressLabeledValue.value.addressString
+                    Text(addressString)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
             }
+        }
+    }
+
+    @ViewBuilder
+    private var profileImage: some View {
+        if let data = contactAddress.contact.thumbnailImageData {
+            if let image = UIImage(data: data) {
+                ThumbnailImage(image: image)
+            }
+        } else {
+            InitialsView(contact: contactAddress.contact)
         }
     }
 }
