@@ -15,7 +15,12 @@ extension CNContact {
 
     /// The contact name's initials.
     var initials: String {
-        String(self.givenName.prefix(1) + self.familyName.prefix(1))
+        var contactInitials = String(self.givenName.prefix(1) + self.familyName.prefix(1))
+
+        if contactInitials.isEmpty {
+            contactInitials = String(self.organizationName.prefix(1))
+        }
+        return contactInitials
     }
 
     static var sample: CNContact {
