@@ -15,22 +15,37 @@ class ContactStore: ObservableObject {
     @Published var contactAddresses: [ContactAddress] = []
     @Published var isLoading = false
 
+    var searchResults: [ContactAddress] {
+        if searchText.isEmpty {
+            return contactAddresses
+        } else {
+            return contactAddresses.filter { $0.fullName.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
+
+    /// Fetches all contactAddresses authorized for the app.
     func fetchContactAddresses() async {
         guard !isLoading else { return }
         isLoading = true
 
-        let task = Task.detached {
-            let keys = await [CNContactViewController.descriptorForRequiredKeys()] as [CNKeyDescriptor]
-            let request = CNContactFetchRequest(keysToFetch: keys)
-            request.sortOrder = .familyName
-            let store = CNContactStore()
+        let keys = [CNContactViewController.descriptorForRequiredKeys()] as [CNKeyDescriptor]
+
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        fetchRequest.sortOrder = .familyName
+
+        let result = await executeFetchRequest(fetchRequest)
+        contactAddresses = result
+
+        isLoading = false
+    }
+
+    /// Executes the fetch request.
+    nonisolated private func executeFetchRequest(_ fetchRequest: CNContactFetchRequest) async -> [ContactAddress] {
+        let fetchingTask = Task {
+            var result: [ContactAddress] = []
 
             do {
-                try await store.requestAccess(for: .contacts)
-
-                var contactAddresses = [ContactAddress]()
-
-                try store.enumerateContacts(with: request, usingBlock: { contact, stop in
+                try CNContactStore().enumerateContacts(with: fetchRequest) { contact, stop in
                     guard !Task.isCancelled else {
                         stop.pointee = true
                         return
@@ -41,37 +56,25 @@ class ContactStore: ObservableObject {
                     if !postalAddresses.isEmpty {
                         for (_, postalAddress) in postalAddresses.enumerated() {
                             let contactAddress = ContactAddress(contact: contact, postalAddressLabeledValue: postalAddress)
-                            contactAddresses.append(contactAddress)
+                            result.append(contactAddress)
                         }
                     } else {
                         let contactAddress = ContactAddress(contact: contact)
-                        contactAddresses.append(contactAddress)
+                        result.append(contactAddress)
                     }
-                })
+                }
 
                 try Task.checkCancellation()
-
-                DispatchQueue.main.async {
-                    self.contactAddresses = contactAddresses
-                    self.isLoading = false
-                }
             } catch {
                 print(error.localizedDescription)
             }
-        }
 
+            return result
+        }
         return await withTaskCancellationHandler {
-            await task.value
+            await fetchingTask.result.get()
         } onCancel: {
-            task.cancel()
-        }
-    }
-
-    var searchResults: [ContactAddress] {
-        if searchText.isEmpty {
-            return contactAddresses
-        } else {
-            return contactAddresses.filter { $0.fullName.localizedCaseInsensitiveContains(searchText) }
+            fetchingTask.cancel()
         }
     }
 }
