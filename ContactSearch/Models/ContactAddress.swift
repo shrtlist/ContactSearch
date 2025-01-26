@@ -24,6 +24,6 @@ struct ContactAddress: Identifiable {
     }
 
     var fullName: String {
-        return contact.fullName
+        return contact.formattedName
     }
 }

@@ -8,14 +8,6 @@
 import Contacts
 
 extension CNContact {
-    /// The combined contact name components.
-    var fullName: String {
-        if let name = CNContactFormatter.string(from: self, style: .fullName) {
-            return name.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        return "No Name"
-    }
-
     /// The formatted name of a contact.
     var formattedName: String {
         CNContactFormatter().string(from: self) ?? "No Name"
