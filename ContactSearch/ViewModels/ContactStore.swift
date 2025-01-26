@@ -15,6 +15,7 @@ class ContactStore: ObservableObject {
     @Published var searchText = ""
     @Published var contactAddresses: [ContactAddress] = []
     @Published var isLoading = false
+    @Published var authorizationStatus: CNAuthorizationStatus
 
     var searchResults: [ContactAddress] {
         if searchText.isEmpty {
@@ -24,7 +25,34 @@ class ContactStore: ObservableObject {
         }
     }
 
+    private let store: CNContactStore
     private let logger = Logger(subsystem: "ContactSearch", category: "ContactStore")
+
+    init() {
+        self.store = CNContactStore()
+        self.authorizationStatus = .notDetermined
+    }
+
+    /// Fetches the Contacts authorization status of the app.
+    func fetchAuthorizationStatus() {
+        authorizationStatus = CNContactStore.authorizationStatus(for: .contacts)
+    }
+
+    /// Prompts the person for access to Contacts if the authorization status of the app can't be determined.
+    func requestAccess() async {
+        let status = CNContactStore.authorizationStatus(for: .contacts)
+        guard status == .notDetermined else { return }
+
+        do {
+            try await store.requestAccess(for: .contacts)
+
+            // Update the authorization status of the app.
+            fetchAuthorizationStatus()
+        } catch {
+            fetchAuthorizationStatus()
+            logger.error("Requesting Contacts access failed: \(error)")
+        }
+    }
 
     /// Fetches all contactAddresses authorized for the app.
     func fetchContactAddresses() async {
@@ -48,7 +76,7 @@ class ContactStore: ObservableObject {
             var result: [ContactAddress] = []
 
             do {
-                try CNContactStore().enumerateContacts(with: fetchRequest) { contact, stop in
+                try await store.enumerateContacts(with: fetchRequest) { contact, stop in
                     guard !Task.isCancelled else {
                         stop.pointee = true
                         return

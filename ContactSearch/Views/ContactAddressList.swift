@@ -1,14 +1,13 @@
 //
-//  ContentView.swift
+//  ContactAddressList.swift
 //  ContactSearch
 //
 //  Created by Marco Abundo on 6/9/21.
 //
 
 import SwiftUI
-import Contacts
 
-struct ContentView: View {
+struct ContactAddressList: View {
     @EnvironmentObject var contactStore: ContactStore
 
     var body: some View {
@@ -38,6 +37,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContactAddressList()
         .environmentObject(ContactStore())
 }
