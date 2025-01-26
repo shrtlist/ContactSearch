@@ -6,7 +6,6 @@
 //  Copyright 2019 shrtlist.com. All rights reserved.
 //
 
-import UIKit
 import Contacts
 
 extension CNPostalAddress {
