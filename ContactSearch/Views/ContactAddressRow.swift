@@ -20,7 +20,7 @@ struct ContactAddressRow: View {
                 if let postalAddressLabeledValue = contactAddress.postalAddressLabeledValue {
                     let addressString = postalAddressLabeledValue.value.addressString
                     Text(addressString)
-                        .font(.subheadline)
+                        .font(.caption)
                         .foregroundColor(.gray)
                 }
             }
