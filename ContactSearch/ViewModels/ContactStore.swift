@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ContactsUI
+import OSLog
 
 @MainActor
 class ContactStore: ObservableObject {
@@ -22,6 +23,8 @@ class ContactStore: ObservableObject {
             return contactAddresses.filter { $0.fullName.localizedCaseInsensitiveContains(searchText) }
         }
     }
+
+    private let logger = Logger(subsystem: "ContactSearch", category: "ContactStore")
 
     /// Fetches all contactAddresses authorized for the app.
     func fetchContactAddresses() async {
@@ -66,7 +69,7 @@ class ContactStore: ObservableObject {
 
                 try Task.checkCancellation()
             } catch {
-                print(error.localizedDescription)
+                logger.error("Fetching contacts failed: \(error)")
             }
 
             return result
