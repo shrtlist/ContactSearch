@@ -5,7 +5,6 @@
 //  Created by Marco Abundo on 6/16/21.
 //
 
-import Foundation
 import Contacts
 
 extension CNContact {
