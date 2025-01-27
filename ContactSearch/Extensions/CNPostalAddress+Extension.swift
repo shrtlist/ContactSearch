@@ -10,7 +10,6 @@ import Contacts
 
 extension CNPostalAddress {
     var addressString: String {
-        let formattedString = CNPostalAddressFormatter.string(from: self, style: .mailingAddress)
-        return formattedString.replacingOccurrences(of: "\n", with: ", ")
+        return CNPostalAddressFormatter.string(from: self, style: .mailingAddress)
     }
 }
