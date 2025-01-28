@@ -31,6 +31,7 @@ class ContactStoreManager: ObservableObject {
     init() {
         self.store = CNContactStore()
         self.authorizationStatus = .notDetermined
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: NSNotification.Name.CNContactStoreDidChange, object: nil)
     }
 
     /// Fetches the Contacts authorization status of the app.
@@ -51,6 +52,12 @@ class ContactStoreManager: ObservableObject {
         } catch {
             fetchAuthorizationStatus()
             logger.error("Requesting Contacts access failed: \(error)")
+        }
+    }
+
+    @objc func reloadData() {
+        Task {
+            await fetchContactAddresses()
         }
     }
 
