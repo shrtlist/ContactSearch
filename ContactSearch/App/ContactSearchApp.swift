@@ -11,8 +11,7 @@ import SwiftUI
 struct ContactSearchApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .environmentObject(ContactStore())
+            ContentView()
         }
     }
 }

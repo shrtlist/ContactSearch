@@ -1,5 +1,5 @@
 //
-//  ContactStore.swift
+//  ContactStoreManager.swift
 //  ContactSearch
 //
 //  Created by Marco Abundo on 6/16/21.
@@ -10,7 +10,7 @@ import ContactsUI
 import OSLog
 
 @MainActor
-class ContactStore: ObservableObject {
+class ContactStoreManager: ObservableObject {
 
     @Published var searchText = ""
     @Published var contactAddresses: [ContactAddress] = []

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContactAddressList: View {
-    @EnvironmentObject var contactStore: ContactStore
+    @EnvironmentObject var contactStore: ContactStoreManager
 
     var body: some View {
         NavigationStack {
@@ -38,5 +38,5 @@ struct ContactAddressList: View {
 
 #Preview {
     ContactAddressList()
-        .environmentObject(ContactStore())
+        .environmentObject(ContactStoreManager())
 }

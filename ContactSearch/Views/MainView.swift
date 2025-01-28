@@ -9,7 +9,7 @@ import SwiftUI
 import ContactsUI
 
 struct MainView: View {
-    @EnvironmentObject var contactStore: ContactStore
+    @EnvironmentObject var contactStore: ContactStoreManager
 
     var body: some View {
         VStack {
@@ -29,5 +29,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .environmentObject(ContactStore())
+        .environmentObject(ContactStoreManager())
 }

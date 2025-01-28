@@ -8,7 +8,7 @@ A button that prompts the person for authorization to access Contacts.
 import SwiftUI
 
 struct RequestAccessButton: View {
-    @EnvironmentObject var contactStore: ContactStore
+    @EnvironmentObject var contactStore: ContactStoreManager
 
     var body: some View {
         NavigationStack {
@@ -43,5 +43,5 @@ struct RequestAccessButton: View {
 
 #Preview {
     RequestAccessButton()
-        .environmentObject(ContactStore())
+        .environmentObject(ContactStoreManager())
 }

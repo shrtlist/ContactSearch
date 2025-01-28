@@ -13,7 +13,8 @@
 		1C69352E2D46CF1F001D42D9 /* AppSettingsLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C69352C2D46CF1F001D42D9 /* AppSettingsLink.swift */; };
 		1C6935312D46D706001D42D9 /* ThumbnailImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6935302D46D706001D42D9 /* ThumbnailImage.swift */; };
 		1C6935332D46D729001D42D9 /* InitialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6935322D46D729001D42D9 /* InitialsView.swift */; };
-		216744CE267A9149000BC2BA /* ContactStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216744CD267A9149000BC2BA /* ContactStore.swift */; };
+		1C6935422D485C23001D42D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6935412D485C20001D42D9 /* ContentView.swift */; };
+		216744CE267A9149000BC2BA /* ContactStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216744CD267A9149000BC2BA /* ContactStoreManager.swift */; };
 		216744D3267AC489000BC2BA /* ContactAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216744D2267AC489000BC2BA /* ContactAddress.swift */; };
 		216744D5267ACD38000BC2BA /* CNContact+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216744D4267ACD38000BC2BA /* CNContact+Extension.swift */; };
 		216744D7267BA32F000BC2BA /* CNPostalAddress+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216744D6267BA32F000BC2BA /* CNPostalAddress+Extension.swift */; };
@@ -30,7 +31,8 @@
 		1C69352C2D46CF1F001D42D9 /* AppSettingsLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsLink.swift; sourceTree = "<group>"; };
 		1C6935302D46D706001D42D9 /* ThumbnailImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailImage.swift; sourceTree = "<group>"; };
 		1C6935322D46D729001D42D9 /* InitialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialsView.swift; sourceTree = "<group>"; };
-		216744CD267A9149000BC2BA /* ContactStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStore.swift; sourceTree = "<group>"; };
+		1C6935412D485C20001D42D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		216744CD267A9149000BC2BA /* ContactStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStoreManager.swift; sourceTree = "<group>"; };
 		216744D1267AAA60000BC2BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		216744D2267AC489000BC2BA /* ContactAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAddress.swift; sourceTree = "<group>"; };
 		216744D4267ACD38000BC2BA /* CNContact+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CNContact+Extension.swift"; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				1C69352C2D46CF1F001D42D9 /* AppSettingsLink.swift */,
 				219F4946267171110036675A /* ContactAddressList.swift */,
 				1C1BB5812D3229A400562892 /* ContactAddressRow.swift */,
+				1C6935412D485C20001D42D9 /* ContentView.swift */,
 				1C6935322D46D729001D42D9 /* InitialsView.swift */,
 				1C6935282D46CC2C001D42D9 /* MainView.swift */,
 				1C69352A2D46CDC3001D42D9 /* RequestAccessButton.swift */,
@@ -95,7 +98,7 @@
 		1C6934E62D3F5A6C001D42D9 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				216744CD267A9149000BC2BA /* ContactStore.swift */,
+				216744CD267A9149000BC2BA /* ContactStoreManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -218,7 +221,8 @@
 				216744D5267ACD38000BC2BA /* CNContact+Extension.swift in Sources */,
 				216744D7267BA32F000BC2BA /* CNPostalAddress+Extension.swift in Sources */,
 				216744D3267AC489000BC2BA /* ContactAddress.swift in Sources */,
-				216744CE267A9149000BC2BA /* ContactStore.swift in Sources */,
+				216744CE267A9149000BC2BA /* ContactStoreManager.swift in Sources */,
+				1C6935422D485C23001D42D9 /* ContentView.swift in Sources */,
 				1C6935312D46D706001D42D9 /* ThumbnailImage.swift in Sources */,
 				219F4945267171110036675A /* ContactSearchApp.swift in Sources */,
 			);

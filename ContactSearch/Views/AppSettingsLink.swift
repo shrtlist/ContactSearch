@@ -9,7 +9,7 @@ import Contacts
 import SwiftUI
 
 struct AppSettingsLink: View {
-    @EnvironmentObject var contactStore: ContactStore
+    @EnvironmentObject var contactStore: ContactStoreManager
     @Environment(\.openURL) private var openURL
     
     var body: some View {
