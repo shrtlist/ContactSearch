@@ -16,13 +16,7 @@ struct ContactAddressRow: View {
 
             VStack(alignment: .leading) {
                 Text(contactAddress.fullName)
-
-                if let postalAddressLabeledValue = contactAddress.postalAddressLabeledValue {
-                    let addressString = postalAddressLabeledValue.value.addressString
-                    Text(addressString)
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
+                addressText
             }
         }
     }
@@ -36,5 +30,13 @@ struct ContactAddressRow: View {
         } else {
             InitialsView(contact: contactAddress.contact)
         }
+    }
+
+    @ViewBuilder
+    private var addressText: some View {
+        let addressText = contactAddress.postalAddressLabeledValue?.value.addressString ?? "No Address"
+        Text(addressText)
+            .font(.caption)
+            .foregroundColor(.gray)
     }
 }
