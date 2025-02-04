@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Contacts
 
 struct ContactAddressList: View {
     @EnvironmentObject var contactStore: ContactStoreManager
@@ -21,16 +22,20 @@ struct ContactAddressList: View {
                     }
                 } else {
                     List(contactStore.searchResults) { contactAddress in
-                        ContactAddressRow(contactAddress: contactAddress)
+                        NavigationLink(destination: {
+                            ContactDetailView(contact: contactAddress.contact)
+                        }, label: {
+                            ContactAddressRow(contactAddress: contactAddress)
+                        })
                     }
                 }
             }
             .searchable(text: $contactStore.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationTitle("Contacts")
-        }
-        .onAppear {
-            Task {
-                await contactStore.fetchContactAddresses()
+            .onAppear {
+                Task {
+                    await contactStore.fetchContactAddresses()
+                }
             }
         }
     }
