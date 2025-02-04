@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import Contacts
 
 struct ContactAddressList: View {
     @EnvironmentObject var contactStore: ContactStoreManager
+    @State private var navPath: [CNContact] = []
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navPath) {
             Group {
                 if contactStore.isLoading {
                     ProgressView()
@@ -22,15 +24,37 @@ struct ContactAddressList: View {
                 } else {
                     List(contactStore.searchResults) { contactAddress in
                         ContactAddressRow(contactAddress: contactAddress)
+                            .onTapGesture {
+                                navPath.append(contactAddress.contact)
+                            }
                     }
                 }
             }
             .searchable(text: $contactStore.searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationTitle("Contacts")
-        }
-        .onAppear {
-            Task {
-                await contactStore.fetchContactAddresses()
+            .navigationDestination(for: CNContact.self) { contact in
+                ContactView(contact: contact)
+                    .navigationBarHidden(true)
+                    .ignoresSafeArea(.all)
+                    .overlay(alignment: .top) {
+                        Color.primary.opacity(0.001)
+                            .frame(height: 56)
+                            .overlay(alignment: .trailing) {
+                                Button {
+                                    navPath.removeLast()
+                                } label: {
+                                    Text("Done")
+                                }
+                                .buttonStyle(.bordered)
+                                .buttonBorderShape(.capsule)
+                                .padding()
+                            }
+                    }
+            }
+            .onAppear {
+                Task {
+                    await contactStore.fetchContactAddresses()
+                }
             }
         }
     }
