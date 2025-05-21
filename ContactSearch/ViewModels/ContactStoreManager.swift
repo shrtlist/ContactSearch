@@ -83,26 +83,31 @@ class ContactStoreManager: ObservableObject {
             var result: [ContactAddress] = []
 
             do {
-                try await store.enumerateContacts(with: fetchRequest) { contact, stop in
-                    guard !Task.isCancelled else {
-                        stop.pointee = true
-                        return
-                    }
+                // Fetch all contact containers (iCloud, Google, etc.)
+                let allContainers = try await store.containers(matching: nil)
 
-                    let postalAddresses = contact.postalAddresses
+                for container in allContainers {
+                    // Create a predicate using the container identifier
+                    let predicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
 
-                    if !postalAddresses.isEmpty {
-                        for (_, postalAddress) in postalAddresses.enumerated() {
-                            let contactAddress = ContactAddress(contact: contact, postalAddressLabeledValue: postalAddress)
+                    // Fetch contacts for the container
+                    let contacts = try await store.unifiedContacts(matching: predicate, keysToFetch: fetchRequest.keysToFetch)
+
+                    // Process contacts from this container
+                    for contact in contacts {
+                        let postalAddresses = contact.postalAddresses
+
+                        if !postalAddresses.isEmpty {
+                            for postalAddress in postalAddresses {
+                                let contactAddress = ContactAddress(contact: contact, postalAddressLabeledValue: postalAddress)
+                                result.append(contactAddress)
+                            }
+                        } else {
+                            let contactAddress = ContactAddress(contact: contact)
                             result.append(contactAddress)
                         }
-                    } else {
-                        let contactAddress = ContactAddress(contact: contact)
-                        result.append(contactAddress)
                     }
                 }
-
-                try Task.checkCancellation()
             } catch {
                 logger.error("Fetching contacts failed: \(error)")
             }
