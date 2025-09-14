@@ -10,12 +10,13 @@ import ContactsUI
 import OSLog
 
 @MainActor
-class ContactStoreManager: ObservableObject {
+@Observable
+class ContactStoreManager {
 
-    @Published var searchText = ""
-    @Published var contactAddresses: [ContactAddress] = []
-    @Published var isLoading = false
-    @Published var authorizationStatus: CNAuthorizationStatus
+    var searchText = ""
+    var contactAddresses: [ContactAddress] = []
+    var isLoading = false
+    var authorizationStatus: CNAuthorizationStatus
 
     var searchResults: [ContactAddress] {
         if searchText.isEmpty {

@@ -9,12 +9,12 @@ import SwiftUI
 import ContactsUI
 
 struct MainView: View {
-    @EnvironmentObject var contactStore: ContactStoreManager
+    @Environment(ContactStoreManager.self) var contactStore
 
     var body: some View {
         VStack {
             switch contactStore.authorizationStatus {
-            case .authorized, .limited:  ContactAddressList()
+            case .authorized, .limited:  ContactAddressList(contactStore: contactStore)
             case .restricted, .denied: AppSettingsLink()
             case .notDetermined: RequestAccessButton()
             @unknown default:
@@ -29,5 +29,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .environmentObject(ContactStoreManager())
+        .environment(ContactStoreManager())
 }

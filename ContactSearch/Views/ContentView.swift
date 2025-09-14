@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var storeManager = ContactStoreManager()
+    @State private var storeManager = ContactStoreManager()
 
     var body: some View {
         MainView()
-            .environmentObject(storeManager)
+            .environment(storeManager)
     }
 }
 
 #Preview {
     ContentView()
-        .environmentObject(ContactStoreManager())
+        .environment(ContactStoreManager())
 }

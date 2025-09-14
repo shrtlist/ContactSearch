@@ -9,7 +9,7 @@ import SwiftUI
 import Contacts
 
 struct ContactAddressList: View {
-    @EnvironmentObject var contactStore: ContactStoreManager
+    @Bindable var contactStore: ContactStoreManager
 
     var body: some View {
         NavigationStack {
@@ -42,6 +42,5 @@ struct ContactAddressList: View {
 }
 
 #Preview {
-    ContactAddressList()
-        .environmentObject(ContactStoreManager())
+    ContactAddressList(contactStore: ContactStoreManager())
 }
